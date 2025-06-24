@@ -15,7 +15,8 @@ jobs:
         uses: actions/checkout@v3
        
       - name: Print OIDC token
-        run: echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN
+        run: echo "OIDC token: ${{ steps.get_id_token.outputs.token }}"
+        id: get_id_token
         shell: bash
 
       - name: Configure AWS Credentials
