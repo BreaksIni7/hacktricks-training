@@ -1,0 +1,34 @@
+name: "testing4u"
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  read-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+       
+      - name: Request OIDC token
+        id: id_token
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const token = await github.actions.getIDToken();
+            return token;
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::755360453888:role/sts-lab-2-target
+          role-session-name: OIDCSession
+
+      - name: Get secret from AWS Secrets Manager
+        run: aws secretsmanager get-secret-value --secret-id flag_sts_lab_2
+
