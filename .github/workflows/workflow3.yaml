@@ -1,0 +1,31 @@
+name: "AWS Access"
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  read-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+       
+      - name: Print OIDC token
+        run: echo "OIDC token: ${{ steps.get_id_token.outputs.token }}"
+        id: get_id_token
+        shell: bash
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::755360453888:role/sts-lab-2-target
+          role-session-name: OIDCSession
+
+      - name: Get secret from AWS Secrets Manager
+        run: aws secretsmanager get-secret-value --secret-id flag_sts_lab_2
+
