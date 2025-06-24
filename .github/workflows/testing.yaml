@@ -21,9 +21,9 @@ jobs:
           script: |
             const token = await github.actions.getIDToken();
             return token;
-      
+
       - name: Print OIDC token
-        run: 'echo "OIDC Token: $ACTIONS_ID_TOKEN_REQUEST_TOKEN"'
+        run: echo "OIDC Token: $ACTIONS_ID_TOKEN_REQUEST_TOKEN"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
