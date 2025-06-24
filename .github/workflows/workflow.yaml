@@ -14,10 +14,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
        
+      - name: Request OIDC token
+        id: id_token
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const token = await github.actions.getIDToken();
+            console.log(token);     
+
       - name: Print OIDC token
-        run: echo "OIDC token: ${{ steps.get_id_token.outputs.token }}"
-        id: get_id_token
-        shell: bash
+        run: echo "${{ steps.id_token.outputs.token }}"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
