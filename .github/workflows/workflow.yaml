@@ -13,12 +13,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-        
+       
       - name: Print OIDC token
         run: echo $ACTIONS_ID_TOKEN_REQUEST_TOKEN
         shell: bash
-
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
