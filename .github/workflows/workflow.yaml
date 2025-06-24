@@ -20,7 +20,7 @@ jobs:
         with:
           script: |
             const token = await github.actions.getIDToken();
-            console.log(token);     
+            return token;
 
       - name: Print OIDC token
         run: echo "${{ steps.id_token.outputs.token }}"
