@@ -30,6 +30,6 @@ jobs:
           role-session-name: OIDCSession
 
       - name: Run shell commands
-          run: |
-            whoami
-            env
+        run: |
+          whoami
+          env
